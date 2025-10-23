@@ -94,56 +94,6 @@ hcloud_server.dokploy-manager (remote-exec): Please go to http://<your-ip>:3000
 
 > **Note:** Your server's firewall should expose port 3000 otherwise Dokploy will not be accessible.
 
-## Accessing the Server
-
-### From the browser
-
-Dokploy should be available under `http://<your-ip>:3000`
-
-After registering, set a server domain and enable HTTPS under Web Server > Server Domain, then route your traffic through that domain. For a walkthrough on setting up a domain and configuring Dokploy, watch [this video](https://youtu.be/ELkPcuO5ebo?si=nx-7Eo5yqnZMG_AH&t=596).
-
-**Important:** Once you've configured your server's domain and enabled , make sure to change the password that you made over HTTP, because it was not created over an encrypted connection.
-
-### Via SSH
-
-```bash
-ssh -i ~/.ssh/dokploy/id_ed25519 dokploy@<your-ip>
-```
-
-### Via VS Code Remote SSH
-
-1. Open VS Code
-2. Select **Remote-SSH: Connect to Host...**
-3. Choose **Configure SSH Hosts...**
-4. Add the following configuration:
-
-```config
-Host DOKPLOY_MANAGER
-  HostName <your-ip>
-  Port 22
-  User dokploy
-  IdentityFile ~/.ssh/dokploy/id_ed25519
-```
-
-You can now open a remote window:
-
-1. Select **Remote-SSH: Connect to Host...**
-2. Select **DOKPLOY_MANAGER**
-
-You should now be connected to the remote host!
-
-### Troubleshooting
-
-**"REMOTE HOST IDENTIFICATION HAS CHANGED"** or **"Host key verification failed."**
-
-This error occurs because you previously connected to a different server at this IP address, and now SSH detects a different host key. This is expected when you destroy and recreate servers with Terraform.
-
-To fix this, remove the old host key from your known_hosts file:
-
-```bash
-$ ssh-keygen -R <your-ip>
-```
-
 ## Cleaning Up
 
 To destroy all resources created by Terraform:
